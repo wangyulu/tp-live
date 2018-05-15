@@ -54,14 +54,18 @@ $http->on('request', function (\Swoole\Http\Request $request, \Swoole\Http\Respo
             $_GET[$key] = $val;
         }
     }
-    ob_start();
+
+    // 把$response放入窗口中
+    $respThink = \think\Container::getInstance()->instance('resp', $response);
+
     // 执行应用并响应
-    \think\Container::get('app', [defined('APP_PATH') ? APP_PATH : ''])
-        ->run()
-        ->send();
-    $res = ob_get_contents();
-    ob_clean();
-    $response->end($res);
+    try {
+        \think\Container::get('app', [defined('APP_PATH') ? APP_PATH : ''])
+            ->run()
+            ->send();
+    } catch (\Exception $e) {
+        echo $e->getMessage();
+    }
 });
 
 $http->start();
