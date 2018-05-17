@@ -82,7 +82,7 @@ class http
         try {
             return $object->execute($server, $taskId, $srcWorkerId);
         } catch (Exception $e) {
-            echo $e->getMessage();
+            echo "task err：", $e->getMessage(), $e->getFile(), $e->getLine();
         }
     }
 
@@ -140,10 +140,10 @@ class http
         $this->resp = $response;
 
         $container = \think\Container::getInstance();
-        // 把server放入容器中
+        // 把server放入容器中，后续task任务时会用到
         $container->instance('serv', $this->http);
 
-        // 把$response放入容器中
+        // 把$response放入容器中，后续输出会用到
         $container->instance('resp', $this->resp);
 
         // 执行应用并响应
@@ -152,7 +152,7 @@ class http
                 ->run()
                 ->send();
         } catch (\Exception $e) {
-            echo $e->getMessage();
+            echo "request err：", $e->getMessage(), $e->getFile(), $e->getLine();
         }
     }
 }

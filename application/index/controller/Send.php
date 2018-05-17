@@ -1,7 +1,6 @@
 <?php namespace app\index\controller;
 
 use think\Container;
-use app\common\lib\Sms;
 use app\common\lib\Response;
 use app\common\lib\task\SmsTask;
 
@@ -20,14 +19,13 @@ class Send
             return Response::error('err');
         }
 
-        // 发送验证码
+        // 验证码
         $code = rand(1000, 9999);
-        Sms::sendSms($phone, $code);
 
         $smsTask = new SmsTask(['code' => $code, 'phone' => $phone]);
         // 调用异步任务
         Container::get('serv')->task(serialize($smsTask));
 
-        return Response::success(true);
+        return Response::success($code);
     }
 }

@@ -9,6 +9,7 @@
 
 use Swoole\Server;
 use think\Container;
+use app\common\lib\Sms;
 use app\common\lib\Redis;
 use app\common\lib\consts\RedisConst;
 use app\common\lib\contracts\TaskInterface;
@@ -44,6 +45,7 @@ class SmsTask implements TaskInterface
      */
     public function execute(Server $server, $taskId, $srcWorkerId)
     {
+        Sms::sendSms($this->data['phone'], $this->data['code']);
         $redis = Redis::getInstance();
         if (false === $redis->set(
                 RedisConst::getSmsPrefix($this->data['phone']),
