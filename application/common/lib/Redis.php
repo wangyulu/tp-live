@@ -66,7 +66,7 @@ class Redis
      */
     public function set($key, $value, $timeout = 0)
     {
-        return $this->redis->set($key, $value, $timeout ?: config('redis.timeout'));
+        return $this->redis->set($key, $value, $timeout ?: config('redis.expires_time'));
     }
 
     /**

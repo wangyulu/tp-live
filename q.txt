@@ -1,0 +1,17 @@
+Q1.onTask接收一个对象的时候,得到的是一个反序列化后的未定义对象
+    如调用：
+        $smsTask = new SmsTask(['code' => $code, 'phone' => $phone]);
+    实际接收到的数据：
+        __PHP_Incomplete_Class Object
+        (
+            [__PHP_Incomplete_Class_Name] => app\common\lib\task\SmsTask
+            [data] => Array
+                (
+                    [code] => 6386
+                    [phone] => 15256818112
+                )
+
+            [isSuccess] =>
+        )
+
+A1.目前在调用task任务的时候先把对象序列化，然后再传递，在接收时再反序列化且在反序列化之前初始化tp

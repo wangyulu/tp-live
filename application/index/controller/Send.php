@@ -1,9 +1,9 @@
 <?php namespace app\index\controller;
 
-use app\common\lib\consts\RedisConst;
-use app\common\lib\Response;
+use think\Container;
 use app\common\lib\Sms;
-use Swoole\Coroutine\Redis;
+use app\common\lib\Response;
+use app\common\lib\task\SmsTask;
 
 /**
  * Created by PhpStorm.
@@ -24,10 +24,10 @@ class Send
         $code = rand(1000, 9999);
         Sms::sendSms($phone, $code);
 
-        $redis = new Redis();
-        $redis->connect(config('redis.host'), config('redis.port'), config('redis.timeout'));
-        $res = $redis->set(RedisConst::getSmsPrefix($phone), $code, config('redis.expires_time'));
+        $smsTask = new SmsTask(['code' => $code, 'phone' => $phone]);
+        // 调用异步任务
+        Container::get('serv')->task(serialize($smsTask));
 
-        return Response::success($res);
+        return Response::success(true);
     }
 }
