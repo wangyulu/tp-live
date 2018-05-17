@@ -160,6 +160,10 @@ class ws
                 $_GET[$key] = $val;
             }
         }
+        $_FILES = [];
+        if (isset($request->files)) {
+            $_FILES = $request->files;
+        }
 
         $this->resp = $response;
 
