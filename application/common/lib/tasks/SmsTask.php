@@ -1,4 +1,4 @@
-<?php namespace app\common\lib\task;
+<?php namespace app\common\lib\tasks;
 
 /**
  * Created by PhpStorm.
@@ -8,33 +8,13 @@
  */
 
 use Swoole\Server;
-use think\Container;
 use app\common\lib\Sms;
 use app\common\lib\Redis;
 use app\common\lib\consts\RedisConst;
-use app\common\lib\contracts\TaskInterface;
+use app\common\lib\adapter\TaskAdapter;
 
-class SmsTask implements TaskInterface
+class SmsTask extends TaskAdapter
 {
-    /**
-     * 任务数据
-     *
-     * @var array
-     */
-    public $data = [];
-
-    /**
-     * 任务是否执行成功
-     *
-     * @var bool
-     */
-    public $isSuccess = false;
-
-    public function __construct($data = [])
-    {
-        $this->data = $data;
-    }
-
     /**
      * 任务执行开始
      *
@@ -58,20 +38,5 @@ class SmsTask implements TaskInterface
         $this->isSuccess = true;
 
         return $this;
-    }
-
-    /**
-     * 任务执行结束
-     *
-     * @param Server        $server
-     * @param               $taskId
-     */
-    public function finish(Server $server, $taskId)
-    {
-        echo $taskId . PHP_EOL;
-        if (!$this->isSuccess) {
-            echo "err {$taskId}" . PHP_EOL;
-        }
-        // TODO: Implement finish() method.
     }
 }

@@ -2,7 +2,7 @@
 
 use think\Container;
 use app\common\lib\Response;
-use app\common\lib\task\SmsTask;
+use app\common\lib\tasks\SmsTask;
 
 /**
  * Created by PhpStorm.

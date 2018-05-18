@@ -117,7 +117,7 @@
 				$.get("http://singwa.swoole.com:8811?s=index/login&"+formData, function (data) {
 					//console.log("http://singwa.swoole.com:8811?s=index/send?" + formData);
                     if (data.code == 0) {
-                        location.href = 'index.html';
+                        location.href = 'detail.html';
                     } else {
                         alert(data.msg);
                     }
