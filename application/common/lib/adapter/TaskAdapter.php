@@ -51,7 +51,7 @@ abstract class TaskAdapter implements TaskInterface
      */
     public function finish(Server $server, $taskId)
     {
-        echo $taskId . PHP_EOL;
+        echo "task finish {$taskId}" . PHP_EOL;
         if (!$this->isSuccess) {
             echo "task err {$taskId}" . PHP_EOL;
         }

@@ -6,5 +6,6 @@
  * Time: 15:54
  */
 return [
-    'host' => 'http://singwa.swoole.com:8811',
+    'host'               => 'http://singwa.swoole.com:8811',
+    'key_client_connect' => 'client:connect'
 ];

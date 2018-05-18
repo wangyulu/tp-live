@@ -42,4 +42,14 @@ class RedisConst
     {
         return self::TPLIVE_PRIFIX . self::SMS_PREFIX . $phone;
     }
+
+    /**
+     * 获取用于保存客户端连接的key
+     *
+     * @return mixed
+     */
+    public static function getClientConnectKey()
+    {
+        return self::TPLIVE_PRIFIX . config('live.key_client_connect');
+    }
 }

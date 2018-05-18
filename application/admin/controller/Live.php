@@ -1,17 +1,23 @@
 <?php namespace app\admin\controller;
 
-use think\Container;
-use app\common\lib\Response;
-use app\common\lib\tasks\PushTask;
-
 /**
  * Created by PhpStorm.
  * User: wangyulu
  * Date: 2018/5/18
  * Time: 11:49
  */
+
+use think\Container;
+use app\common\lib\Response;
+use app\common\lib\tasks\PushTask;
+
 class Live
 {
+    /**
+     * 赛况消息推送
+     *
+     * @return null
+     */
     public function push()
     {
         if (empty($_GET)) {

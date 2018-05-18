@@ -11,6 +11,11 @@ use app\common\lib\Response;
 
 class Image
 {
+    /**
+     * 图片上传
+     *
+     * @return null
+     */
     public function index()
     {
         $file = request()->file('file');

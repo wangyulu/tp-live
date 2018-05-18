@@ -81,4 +81,40 @@ class Redis
     {
         return $this->redis->setex($key, time() + $time, $val);
     }
+
+    /**
+     * 向有序集合中添加一个值
+     *
+     * @param $key
+     * @param $value
+     * @return int
+     */
+    public function sadd($key, $value)
+    {
+        return $this->redis->sAdd($key, $value);
+    }
+
+    /**
+     * 获取指定有序集合
+     *
+     * @param $key
+     * @return array
+     */
+    public function sMembers($key)
+    {
+        return $this->redis->sMembers($key);
+    }
+
+    /**
+     * 移除指定有序集合中的某个元素
+     *
+     * @param $key
+     * @param $member
+     */
+    public function sRemove($key, $member)
+    {
+        $this->redis->sRemove($key, $member);
+
+        return;
+    }
 }

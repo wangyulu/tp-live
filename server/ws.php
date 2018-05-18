@@ -44,6 +44,7 @@ class ws
         );
         $this->ws->on('workerStart', [$this, 'workerStart']);
         $this->ws->on('open', [$this, 'open']);
+        $this->ws->on('close', [$this, 'close']);
         $this->ws->on('message', [$this, 'message']);
         $this->ws->on('request', [$this, 'request']);
         $this->ws->on('task', [$this, 'task']);
@@ -67,6 +68,15 @@ class ws
     }
 
     /**
+     * 初始化TP应用
+     */
+    private function initTpApp()
+    {
+        \think\Container::get('app', [defined('APP_PATH') ? APP_PATH : ''])
+            ->initialize();
+    }
+
+    /**
      * 客户端与服务器建立连接且完成握手后调用
      *
      * @param \Swoole\WebSocket\Server $server
@@ -74,7 +84,29 @@ class ws
      */
     public function open(\Swoole\WebSocket\Server $server, \Swoole\Http\Request $resp)
     {
+        // 初始化TP应用
+        $this->initTpApp();
+        $obj = new \app\common\lib\tasks\ClientConnectAddTask(['fd' => $resp->fd]);
         echo "open {$resp->fd} success" . PHP_EOL;
+
+        return $server->task(serialize($obj));
+    }
+
+    /**
+     * Tcp客户端连接关闭后回调此方法
+     *
+     * @param Server $server
+     * @param        $fd
+     * @param        $reactorId
+     */
+    public function close(\Swoole\Server $server, $fd, $reactorId)
+    {
+        // 初始化TP应用
+        $this->initTpApp();
+        $obj = new \app\common\lib\tasks\ClientConnectRemoveTask(['fd' => $fd]);
+        echo "close {$fd}" . PHP_EOL;
+
+        return $server->task(serialize($obj));
     }
 
     /**
@@ -98,9 +130,8 @@ class ws
      */
     public function task(\Swoole\Server $server, $taskId, $srcWorkerId, $task)
     {
-        // 执行应用并响应
-        \think\Container::get('app', [defined('APP_PATH') ? APP_PATH : ''])
-            ->initialize();
+        // 初始化TP应用
+        $this->initTpApp();
         $object = unserialize($task);
 
         try {
