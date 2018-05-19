@@ -15,7 +15,9 @@
 	<link rel="stylesheet" href="./assert/iconfont/iconfont.css">
 	<link rel="shortcut icon" href="./favicon.ico">
 	<script src="./js/jquery-3.3.1.min.js"></script>
+	<script src="./js/chat-push.js"></script>
 	<script src="./js/live.js"></script>
+	<script src="./js/chat.js"></script>
 	<style>
 		/*详情界面保持上部分静止，下面滚动; 同样利用flex布局 poster自然高度， tab-nav自然高度， tab-block填满剩余部分*/
 		.poster {
@@ -310,9 +312,10 @@
 						<p>08:44:41 火箭队请求暂停 常规暂停</p>
 						<p>08:44:40 哈登进攻犯规 个人犯规3次</p>
 					</div>
-				</div>
-			</div>-->
+				</div>-->
+			</div>
 			<div id="comments" class="hidden comments">
+				<!--
 				<div class="comment">
 					<span>xixi</span>
 					<span>赞~</span>
@@ -360,9 +363,9 @@
 				<div class="comment">
 					<span>singwa</span>
 					<span>《烈火如歌》最近真是吸粉无数，各种话题随随便便就有成千上万的阅读量，本剧的点击量也轻轻松松破了十亿。看来热巴的高颜值和周渝民男神的实力演技，获得了大家的广泛肯...[详情]</span>
-				</div>
+				</div>-->
 				<div class="comment-form">
-					<input type="text" placeholder="别憋着，说点啥~~ 回车既发射"></input>
+					<input id="msg-push" type="text" placeholder="别憋着，说点啥~~ 回车既发射"></input>
 				</div>
 			</div>
 			<div id="match-data" class="hidden match-data">

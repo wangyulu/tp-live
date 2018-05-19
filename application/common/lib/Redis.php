@@ -91,7 +91,12 @@ class Redis
      */
     public function sadd($key, $value)
     {
-        return $this->redis->sAdd($key, $value);
+        $res = $this->redis->sAdd($key, $value);
+        if ($res) {
+            $this->redis->expire($key, config('redis.expire'));
+        }
+
+        return $res;
     }
 
     /**

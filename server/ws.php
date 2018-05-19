@@ -23,6 +23,13 @@ class ws
     protected $port = 8811;
 
     /**
+     * 聊天室
+     *
+     * @var int
+     */
+    protected $chatPort = 8812;
+
+    /**
      * server服务
      *
      * @var
@@ -42,6 +49,7 @@ class ws
                 'task_worker_num'       => 1
             ]
         );
+        $this->ws->addListener($this->host, $this->chatPort, SWOOLE_SOCK_TCP);
         $this->ws->on('workerStart', [$this, 'workerStart']);
         $this->ws->on('open', [$this, 'open']);
         $this->ws->on('close', [$this, 'close']);
