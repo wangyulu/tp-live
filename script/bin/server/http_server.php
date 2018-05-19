@@ -9,7 +9,7 @@ $http = new \Swoole\Http\Server('0.0.0.0', 8811);
 $http->set(
     [
         'enable_static_handler' => true,
-        'document_root'         => __DIR__ . '/../public/static/',
+        'document_root'         => __DIR__ . '/../../../public/static/',
         'worker_num'            => 4
     ]
 );
@@ -18,9 +18,9 @@ $http->on('workerstart', function (\Swoole\Server $http, $workerId) {
     // [ 应用入口文件 ]
 
     // 定义应用目录
-    define('APP_PATH', __DIR__ . '/../application/');
+    define('APP_PATH', __DIR__ . '/../../../application/');
     // 加载基础文件
-    require __DIR__ . '/../thinkphp/base.php';
+    require __DIR__ . '/../../../thinkphp/base.php';
 });
 
 $http->on('request', function (\Swoole\Http\Request $request, \Swoole\Http\Response $response) use ($http) {

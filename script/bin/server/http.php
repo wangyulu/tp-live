@@ -37,7 +37,7 @@ class http
         $this->http->set(
             [
                 'enable_static_handler' => true,
-                'document_root'         => __DIR__ . '/../public/static',
+                'document_root'         => __DIR__ . '/../../../public/static',
                 'worker_num'            => 2,
                 'task_worker_num'       => 1
             ]
@@ -59,9 +59,9 @@ class http
     public function workerStart(\Swoole\Server $server, $workerId)
     {
         // 定义应用目录
-        define('APP_PATH', __DIR__ . '/../application/');
+        define('APP_PATH', __DIR__ . '/../../../application/');
         // 加载基础文件
-        require_once __DIR__ . '/../thinkphp/base.php';
+        require_once __DIR__ . '/../../../thinkphp/base.php';
     }
 
     /**
