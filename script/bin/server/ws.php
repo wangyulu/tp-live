@@ -162,6 +162,27 @@ class ws
     }
 
     /**
+     * 记录日志
+     */
+    public function writeLog()
+    {
+        $filename = date('d') . '_access.log';
+        $dir = APP_PATH . '../runtime/log/' . date('Ym') . '/';
+        if (!file_exists($dir)) {
+            mkdir($dir);
+        }
+
+        $logs = array_merge($_GET, $_POST, $_SERVER);
+        $content = date('Y-m-d H:i:s');
+        foreach ($logs as $key => $val) {
+            $content .= strtolower($key) . '=' . $val . ' ';
+        }
+        swoole_async_writefile($dir . $filename, $content . PHP_EOL, function ($filename) {
+            // todo
+        }, FILE_APPEND);
+    }
+
+    /**
      * 客户端请求时回调
      *
      * @param \Swoole\Http\Request  $request
@@ -212,6 +233,8 @@ class ws
 
         // 把$response放入容器中，后续输出会用到
         $container->instance('resp', $this->resp);
+
+        $this->writeLog();
 
         // 执行应用并响应
         try {
